@@ -1,11 +1,17 @@
 #include <Arduino.h>
-#include <SPI.h>
-#include <WiFiNINA.h>
+#include "MoodyAudio.h"
+
+MoodyAudio<256> audio;
 
 void setup() {
-  // put your setup code here, to run once:
+    Serial.begin(9600);
+    audio.begin();
+    audio.setSilenceThreshold();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+    audio.listen();
+    if(audio.ready()) {
+        Serial.println(audio.analyze());
+    }
 }
